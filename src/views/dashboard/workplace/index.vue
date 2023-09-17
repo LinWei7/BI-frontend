@@ -4,7 +4,7 @@
       <a-col :span="12">
         <div>
           <a-card
-            :style="{ width: '720px', marginLeft: '70px' }"
+            :style="{ width: '720px', marginLeft: '100px' }"
             title="智能分析"
           >
             <a-form
@@ -69,13 +69,11 @@
         <a-divider />
         <a-row>
           <div>
-            <a-card
-              :style="{ width: '720px', height: '720px' }"
-              title="可视化图表"
-            >
+            <a-card :style="{ width: '720px' }" title="可视化图表">
               <Chart
                 :option="toRaw(optionStore.getOption)"
                 :style="{ width: '500px', height: '500px' }"
+                style="margin-left: 28px"
             /></a-card>
           </div>
         </a-row>
@@ -85,11 +83,10 @@
 </template>
 
 <script lang="ts" setup>
-  import { reactive } from 'vue';
+  import { reactive, toRaw } from 'vue';
   import { useChartStore } from '@/store';
   import useOptionStore from '@/store/modules/Option';
   import useSubmittingStore from '@/store/modules/Submitting';
-  import { toRaw } from 'vue';
 
   const chartStore = useChartStore();
   const optionStore = useOptionStore();
@@ -106,6 +103,7 @@
     form.file = file.file;
   };
   const handleSubmit = async (data: any) => {
+    // eslint-disable-next-line no-console
     console.log('🚀 ~ file: index.vue:96 ~ toRowOption:', toRowOption);
     if (submittingStore.submitting) {
       return;
@@ -118,6 +116,7 @@
     });
     optionStore.setOption({ option: undefined });
     await chartStore.genChartByAiUsingPost(data);
+    // eslint-disable-next-line no-console
     console.log(toRowOption);
     submittingStore.setSubmitting(false);
   };
